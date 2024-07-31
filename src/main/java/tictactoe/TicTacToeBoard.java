@@ -1,0 +1,59 @@
+package tictactoe;
+
+public
+class TicTacToeBoard {
+    private static final int               BOARD_LENGTH = 3;
+    private              TicTacToeMark[][] board        = new TicTacToeMark[BOARD_LENGTH][BOARD_LENGTH];
+
+    TicTacToeBoard() {
+    }
+
+    /**
+     * Places the specified <code>TicTacToeMark</code> at the location on the board given by the parameters. This will
+     * overwrite any value currently on the board at the given location, and will not check if there is already a value
+     * there.
+     *
+     * @param mark The mark to be placed.
+     * @param row  The row index of placement.
+     * @param col  The column index of placement.
+     */
+    public
+    void mark(TicTacToeMark mark, int row, int col) {
+        assert board[row][col] == null;
+        board[row][col] = mark;
+    }
+
+    /**
+     * @param row The row index to be accessed.
+     * @param col The column index to be accessed.
+     *
+     * @return The <code>TicTacToe</code> mark specified by the input parameters.
+     */
+    public
+    TicTacToeMark getMark(int row, int col) {
+        if (row < BOARD_LENGTH && col < BOARD_LENGTH) {return board[row][col];}
+        return null;
+    }
+
+    public
+    int getBoardLength() {
+        return BOARD_LENGTH;
+    }
+
+    @Override
+    public
+    String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (board[row][col] == null) {
+                    sb.append("- ");
+                } else {
+                    sb.append(String.format("%s ", board[row][col]));
+                }
+            }
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+}
