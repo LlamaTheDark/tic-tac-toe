@@ -208,4 +208,3 @@ classDiagram
 | 3:30 PM  | Final working code commit made to GitHub.                                                                       |
 | 3:33 PM  | Upload final build of project to github under *Releases*.                                                       |
 | 3:40 PM  | Push generated Javadocs to Github. Write this time-table.                                                       |
-| 
