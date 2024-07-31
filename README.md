@@ -134,16 +134,16 @@ classDiagram
 With the UML diagram complete, it was time to start implementing it. I'll start by creating all the classes, and then
 creating unit tests for key methods in each class. I'll use JUnit for the tests.
 
-As I was implementing the design, I made some key changes that I saw were not realistic or that would not represent the
-best implementation. These were mainly:
+As I was implementing the design, I made some key changes. These were mainly:
 
-| Change                                                           | Purpose                                                                                                                                                                                      |
-|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Remove `playGame()` from `TicTacToeGame`                         | This was to be implemented by `TicTacToeRepl`                                                                                                                                                |
-| Change `getWinner(): TicTacToeMark` to `getEndMessage(): String` | This was to reduce the number of classes that need to know about the use of the `TicTacToeMark` enumeration. It also accounts for the fact that there is not always a winner in Tic-Tac-Toe. |
-| Rename `TicTacToeRepl` to just `TicTacToe`                       | I think this is a more readable and accurate name.                                                                                                                                           |
+| Change                                        | Purpose                                                                                                                                                                                      |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Remove `playGame()` from `TicTacToeGame`      | This was to be implemented by `TicTacToeRepl`                                                                                                                                                |
+| Remove `getEndMessage()` from `TicTacToeGame` | This was to reduce the number of classes that need to know about the use of the `TicTacToeMark` enumeration. It also accounts for the fact that there is not always a winner in Tic-Tac-Toe. |
+| Rename `TicTacToeRepl` to just `TicTacToe`    | I think this is a more readable and accurate name.                                                                                                                                           |
 
-The updated class diagram looks like this:
+The updated class diagram looks like this, but even this is not entirely accurate. Please see the generated Javadocs for
+exact specifications:
 
 ```mermaid
 classDiagram
@@ -160,7 +160,6 @@ classDiagram
         +getBoard() TicTacToeBoard
         +makeMark(location String) void
         +makeOpponentMark() void
-        +getEndMessage() String
         -interpretUserInput(input String) int[]
         -validateMark(location: int[2]) bool
     }
@@ -186,7 +185,6 @@ classDiagram
 
     class IOUtility {
         -scanner: Scanner$
-        +printToBlankScreen()
         +getNextString()
     }
 
@@ -198,4 +196,16 @@ classDiagram
     TicTacToe "1" <-- IOUtility
 ```
 
-remove getendmessage
+## Time table:
+
+| Time     | Activity                                                                                                        |
+|----------|-----------------------------------------------------------------------------------------------------------------|
+| 11:30 AM | Open challenge link. Read to understand and write readme file to explain approach.                              |
+| 11:45 AM | Start working on UML diagram.                                                                                   |
+| 12:45 PM | Begin implementation.                                                                                           |
+| 1:45 PM  | Attempt to create tests with JUnit. Run into issue with Intellij so do not use JUnit and instead test manually. |
+| 3:00 PM  | Clean up code and fill in missing documentation.                                                                |
+| 3:30 PM  | Final working code commit made to GitHub.                                                                       |
+| 3:33 PM  | Upload final build of project to github under *Releases*.                                                       |
+| 3:40 PM  | Push generated Javadocs to Github. Write this time-table.                                                       |
+| 
