@@ -16,10 +16,10 @@ class RandomMoveNPC implements NPC {
     @Override
     public
     int[] getNextMarkLocation(TicTacToeBoard board) {
-        int[] markLocation = {RAND.nextInt(), RAND.nextInt()};
+        int[] markLocation = {RAND.nextInt(board.getBoardLength()), RAND.nextInt(board.getBoardLength())};
         while (board.getMark(markLocation[0], markLocation[1]) != null) {
-            markLocation[0] = RAND.nextInt();
-            markLocation[1] = RAND.nextInt();
+            markLocation[0] = RAND.nextInt(board.getBoardLength());
+            markLocation[1] = RAND.nextInt(board.getBoardLength());
         }
         return markLocation;
     }
