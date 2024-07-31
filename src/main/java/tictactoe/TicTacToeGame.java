@@ -4,18 +4,16 @@ import tictactoe.exception.TicTacToeException;
 import tictactoe.npc.NPC;
 import tictactoe.npc.RandomMoveNPC;
 
+/**
+ * A class to store the states and behaviors of a TicTacToe game.
+ */
 public
 class TicTacToeGame {
-    private final NPC           opponent   = new RandomMoveNPC();
+    private final NPC           OPPONENT   = new RandomMoveNPC();
     private       TicTacToeMark teamTurn;
     private       int           turnsTaken = 0;
 
-    private TicTacToeBoard board = new TicTacToeBoard();
-
-    private
-    enum EndState {
-        DRAW, XWIN, OWIN
-    }
+    private final TicTacToeBoard BOARD = new TicTacToeBoard();
 
     /**
      * Initializes the TicTacToeGame with the requested starting player.
@@ -37,12 +35,30 @@ class TicTacToeGame {
         }
     }
 
+    /**
+     * Makes a mark based off a string location
+     *
+     * @param location The location to be marked
+     *
+     * @throws TicTacToeException if the location is in the wrong format.
+     * @see tictactoe.TicTacToeGame#parseUserInput
+     */
     public
     void makeMark(String location) throws TicTacToeException {
         var parsedLocation = parseUserInput(location);
         makeMark(parsedLocation);
     }
 
+    /**
+     * Parses <code>String</code> user input to array indices.
+     *
+     * @param location The <code>String</code> to be parsed.
+     *
+     * @return An integer array of size <code>2</code> in the form {row, col} that describes the location specified by
+     * user input.
+     *
+     * @throws TicTacToeException if the user input is not valid.
+     */
     private
     int[] parseUserInput(String location) throws TicTacToeException {
         char[] parsedInput = new char[2];
@@ -68,59 +84,64 @@ class TicTacToeGame {
         return indexLocation;
     }
 
+    /**
+     * "Marks" a location on the board of the game. Uses the team whose turn it is to mark.
+     *
+     * @param location The location to make the mark.
+     */
     private
-    void makeMark(int[] location) throws TicTacToeException {
-        if (validateMark(location[0], location[1])) {
-            board.mark(teamTurn, location[0], location[1]);
-            teamTurn = teamTurn == TicTacToeMark.O ? TicTacToeMark.X : TicTacToeMark.O;
-            turnsTaken++;
-        } else {
-            throw new TicTacToeException(
-                    "Failed to make move. The requested spot is already taken or does not exist on the board");
-        }
+    void makeMark(int[] location) {
+        BOARD.mark(teamTurn, location[0], location[1]);
+        teamTurn = teamTurn == TicTacToeMark.O ? TicTacToeMark.X : TicTacToeMark.O;
+        turnsTaken++;
     }
 
-    private
-    boolean validateMark(int row, int col) {
-        return true;
-    }
-
+    /**
+     * Uses an <code></code> to generate a move location, and then makes the move.
+     *
+     * @throws TicTacToeException
+     */
     public
     void makeOpponentMark() throws TicTacToeException {
-        var location = opponent.getNextMarkLocation(this.board);
+        var location = OPPONENT.getNextMarkLocation(this.BOARD);
         assert location.length == 2;
 
         makeMark(location);
     }
 
+    /**
+     * @param teamMark The mark of the team whose 3-in-a-row state should be tested.
+     *
+     * @return Whether the specified team has 3 marks in a row on the board at this time.
+     */
     public
     boolean threeInARow(TicTacToeMark teamMark) {
 
         // check columns
-        for (int col = 0; col < board.getBoardLength(); col++) {
-            for (int row = 0; row < board.getBoardLength(); row++) {
-                if (board.getMark(row, col) != teamMark) {break;}
+        for (int col = 0; col < BOARD.getBoardLength(); col++) {
+            for (int row = 0; row < BOARD.getBoardLength(); row++) {
+                if (BOARD.getMark(row, col) != teamMark) {break;}
                 if (row == 2) {return true;}
             }
         }
 
         // check rows
-        for (int row = 0; row < board.getBoardLength(); row++) {
-            for (int col = 0; col < board.getBoardLength(); col++) {
-                if (board.getMark(row, col) != teamMark) {break;}
+        for (int row = 0; row < BOARD.getBoardLength(); row++) {
+            for (int col = 0; col < BOARD.getBoardLength(); col++) {
+                if (BOARD.getMark(row, col) != teamMark) {break;}
                 if (col == 2) {return true;}
             }
         }
 
         // check tl-br diagonal
-        for (int row = 0, col = 0; row < board.getBoardLength() && col < board.getBoardLength(); col++, row++) {
-            if (board.getMark(row, col) != teamMark) {break;}
+        for (int row = 0, col = 0; row < BOARD.getBoardLength() && col < BOARD.getBoardLength(); col++, row++) {
+            if (BOARD.getMark(row, col) != teamMark) {break;}
             if (row == 2 && col == 2) {return true;}
         }
 
         // check bl-tr diagonal
-        for (int row = 2, col = 0; row < board.getBoardLength() && col < board.getBoardLength(); col++, row--) {
-            if (board.getMark(row, col) != teamMark) {break;}
+        for (int row = 2, col = 0; row < BOARD.getBoardLength() && col < BOARD.getBoardLength(); col++, row--) {
+            if (BOARD.getMark(row, col) != teamMark) {break;}
             if (row == 0 && col == 2) {return true;}
         }
 
@@ -129,10 +150,12 @@ class TicTacToeGame {
 
     public
     boolean isGameOver() {
-        if (getTurnsTaken() == board.getBoardLength() * board.getBoardLength()) {return true;}
+        if (getTurnsTaken() == BOARD.getBoardLength() * BOARD.getBoardLength()) {return true;}
         if (threeInARow(TicTacToeMark.X)) {return true;}
         return threeInARow(TicTacToeMark.O);
     }
+
+    // ACCESSORS
 
     public
     int getTurnsTaken() {
@@ -145,5 +168,5 @@ class TicTacToeGame {
     }
 
     public
-    TicTacToeBoard getBoard() {return this.board;}
+    TicTacToeBoard getBoard() {return this.BOARD;}
 }

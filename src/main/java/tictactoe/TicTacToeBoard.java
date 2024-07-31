@@ -1,5 +1,8 @@
 package tictactoe;
 
+/**
+ * Models a tic-tac-toe board as a 3x3 square of tic-tac-toe mark objects.
+ */
 public
 class TicTacToeBoard {
     private static final int               BOARD_LENGTH = 3;

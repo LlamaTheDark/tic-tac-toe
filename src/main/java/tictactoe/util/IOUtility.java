@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public
 class IOUtility {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public
     String getNextWord() {
-        return scanner.next();
+        return SCANNER.next();
     }
 }

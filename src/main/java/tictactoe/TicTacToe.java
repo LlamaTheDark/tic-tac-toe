@@ -3,10 +3,19 @@ package tictactoe;
 import tictactoe.exception.TicTacToeException;
 import tictactoe.util.IOUtility;
 
+/**
+ * The class responsible for handling the game repl and some game logic
+ */
 public
 class TicTacToe {
     private final IOUtility io = new IOUtility();
 
+    /**
+     * Runs the repl deciding:
+     * <ul><li>Who will move first?</li><li>Will you play again?</li></ul>
+     * <p>
+     * Also runs the main game loop.
+     */
     public
     void playGame() {
         while (true) {
@@ -50,7 +59,12 @@ class TicTacToe {
         }
     }
 
-
+    /**
+     * Loops through the game logic, including making moves, triggering the opponent to make moves, displaying
+     * move-making instructions, and checking for if the game should end.
+     *
+     * @param game The game being played.
+     */
     private
     void runGameLoop(TicTacToeGame game) {
         while (!game.isGameOver()) {
@@ -67,7 +81,7 @@ class TicTacToe {
                                        \s
                                        """);
                     System.out.println(game.getBoard());
-                    System.out.print("tic-tac-toe >>> ");
+                    System.out.print("mark location >>> ");
                     game.makeMark(io.getNextWord());
                 } else {
                     System.out.println();
