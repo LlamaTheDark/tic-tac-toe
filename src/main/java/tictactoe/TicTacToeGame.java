@@ -146,6 +146,16 @@ class TicTacToeGame {
         return false;
     }
 
+    /**
+     * Checks 3 conditions:
+     * <ol>
+     *     <li>Is the board filled up with marks?</li>
+     *     <li>Does X have a "three-in-a-row"?</li>
+     *     <li>Does O have a "three-in-a-row"?</li>
+     * </ol>
+     *
+     * @return Whether any of the 3 conditions mentioned above are true
+     */
     public
     boolean isGameOver() {
         if (getTurnsTaken() == BOARD.getBoardLength() * BOARD.getBoardLength()) {return true;}
