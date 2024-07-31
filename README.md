@@ -117,7 +117,7 @@ classDiagram
     class IOUtility {
         -scanner: Scanner$
         +printToBlankScreen()
-        -getNextString()
+        +getNextString()
     }
 
     TicTacToeBoard --o "1" TicTacToeGame
@@ -187,7 +187,7 @@ classDiagram
     class IOUtility {
         -scanner: Scanner$
         +printToBlankScreen()
-        -getNextString()
+        +getNextString()
     }
 
     TicTacToeBoard --o "1" TicTacToeGame
@@ -197,3 +197,5 @@ classDiagram
     TicTacToe "1" *-- TicTacToeGame
     TicTacToe "1" <-- IOUtility
 ```
+
+remove getendmessage

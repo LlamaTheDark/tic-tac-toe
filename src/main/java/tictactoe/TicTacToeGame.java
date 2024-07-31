@@ -12,6 +12,11 @@ class TicTacToeGame {
 
     private TicTacToeBoard board = new TicTacToeBoard();
 
+    private
+    enum EndState {
+        DRAW, XWIN, OWIN
+    }
+
     /**
      * Initializes the TicTacToeGame with the requested starting player.
      *
@@ -35,7 +40,7 @@ class TicTacToeGame {
     public
     void makeMark(String location) throws TicTacToeException {
         var parsedLocation = parseUserInput(location);
-        makeMark(location);
+        makeMark(parsedLocation);
     }
 
     private
@@ -45,18 +50,18 @@ class TicTacToeGame {
         parsedInput[0] = splitLocation[0];
         parsedInput[1] = splitLocation[1];
 
-        var ttte = new TicTacToeException("Failed to make mark on board. Location given is not valid");
+        var ttte = new TicTacToeException("Failed to make mark on board. Location given is not valid.");
         int[] indexLocation = new int[2];
         switch (parsedInput[0]) {
-            case 'T', 't' -> indexLocation[0] = 0;
+            case 'T', 't' -> {} // variable already assigned
             case 'M', 'm' -> indexLocation[0] = 1;
             case 'B', 'b' -> indexLocation[0] = 2;
             default -> throw ttte;
         }
         switch (parsedInput[1]) {
-            case 'L', 'l' -> indexLocation[1] = 0;
+            case 'L', 'l' -> {}
             case 'M', 'm' -> indexLocation[1] = 1;
-            case 'R', 'r' -> indexLocation[0] = 2;
+            case 'R', 'r' -> indexLocation[1] = 2;
             default -> throw ttte;
         }
 
@@ -68,6 +73,7 @@ class TicTacToeGame {
         if (validateMark(location[0], location[1])) {
             board.mark(teamTurn, location[0], location[1]);
             teamTurn = teamTurn == TicTacToeMark.O ? TicTacToeMark.X : TicTacToeMark.O;
+            turnsTaken++;
         } else {
             throw new TicTacToeException(
                     "Failed to make move. The requested spot is already taken or does not exist on the board");
@@ -88,13 +94,6 @@ class TicTacToeGame {
     }
 
     public
-    String getEndMessage() {
-        assert turnsTaken == board.getBoardLength() * board.getBoardLength();
-
-        return null;
-    }
-
-    private
     boolean threeInARow(TicTacToeMark teamMark) {
 
         // check columns
@@ -128,9 +127,23 @@ class TicTacToeGame {
         return false;
     }
 
+    public
+    boolean isGameOver() {
+        if (getTurnsTaken() == board.getBoardLength() * board.getBoardLength()) {return true;}
+        if (threeInARow(TicTacToeMark.X)) {return true;}
+        return threeInARow(TicTacToeMark.O);
+    }
 
     public
     int getTurnsTaken() {
         return turnsTaken;
     }
+
+    public
+    TicTacToeMark getTeamTurn() {
+        return this.teamTurn;
+    }
+
+    public
+    TicTacToeBoard getBoard() {return this.board;}
 }
