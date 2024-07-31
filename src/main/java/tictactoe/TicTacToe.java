@@ -29,12 +29,16 @@ class TicTacToe {
                                                                           \s
                                         or... play again? (type 'y' + Enter to play again! Enter any other key to quit.)
                                        \s""");
-                } else {
+                } else if (game.threeInARow(TicTacToeMark.O)) {
                     System.out.println("""
                                         Honestly it's kind of embarrassing that you lost here... your opponent just picked squares randomly.
                                                                           \s
                                         Oh well... play again? (type 'y' + Enter to play again! Enter any other key to quit.)
                                        \s""");
+                } else {
+                    System.out.println("""
+                                       Wooooooow a draw! What a tense game. Press 'y' + Enter to play again! Enter any other key to quit.
+                                       """);
                 }
 
                 if (!io.getNextWord().toLowerCase().startsWith("y")) {
