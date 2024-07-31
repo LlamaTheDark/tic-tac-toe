@@ -90,21 +90,30 @@ class TicTacToeGame {
      * @param location The location to make the mark.
      */
     private
-    void makeMark(int[] location) {
-        BOARD.mark(teamTurn, location[0], location[1]);
-        teamTurn = teamTurn == TicTacToeMark.O ? TicTacToeMark.X : TicTacToeMark.O;
-        turnsTaken++;
+    void makeMark(int[] location) throws TicTacToeException {
+        if (validateMark(location)) {
+            BOARD.mark(teamTurn, location[0], location[1]);
+            teamTurn = teamTurn == TicTacToeMark.O ? TicTacToeMark.X : TicTacToeMark.O;
+            turnsTaken++;
+        } else {
+            throw new TicTacToeException("Failed to make move: there is already a mark there!");
+        }
     }
 
     /**
      * Uses an <code></code> to generate a move location, and then makes the move.
      */
     public
-    void makeOpponentMark() {
+    void makeOpponentMark() throws TicTacToeException {
         var location = OPPONENT.getNextMarkLocation(this.BOARD);
         assert location.length == 2;
 
         makeMark(location);
+    }
+
+    private
+    boolean validateMark(int[] location) {
+        return getBoard().getMark(location[0], location[1]) == null;
     }
 
     /**
