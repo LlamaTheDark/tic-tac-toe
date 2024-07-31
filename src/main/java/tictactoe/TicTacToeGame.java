@@ -98,11 +98,9 @@ class TicTacToeGame {
 
     /**
      * Uses an <code></code> to generate a move location, and then makes the move.
-     *
-     * @throws TicTacToeException
      */
     public
-    void makeOpponentMark() throws TicTacToeException {
+    void makeOpponentMark() {
         var location = OPPONENT.getNextMarkLocation(this.BOARD);
         assert location.length == 2;
 
